@@ -1,0 +1,129 @@
+/* LED Blink, Teensyduino Tutorial #1
+   http://www.pjrc.com/teensy/tutorial.html
+ 
+   This example code is in the public domain.
+*/
+
+const uint8_t ledPin1 = 27;
+const uint8_t ledPin2 = 28;
+const uint8_t ledPin3 = 29;
+
+const boolean invert = false; // set true if common anode, false if common cathode
+
+uint8_t color = 0;        // a value from 0 to 255 representing the hue
+uint8_t R, G, B;          // the Red Green and Blue color components
+uint8_t brightness = 255; // 255 is maximum brightness
+
+void setup() 
+{
+
+  Serial.begin(9600);
+  pinMode(ledPin1, OUTPUT);
+  pinMode(ledPin2, OUTPUT);
+  pinMode(ledPin3, OUTPUT);
+
+}
+
+void loop() 
+{
+
+ digitalWrite(ledPin1, LOW);
+ digitalWrite(ledPin2, HIGH);
+ digitalWrite(ledPin3, HIGH);
+ delay(1000);
+ 
+
+ digitalWrite(ledPin1, HIGH);
+ digitalWrite(ledPin2, LOW);
+ digitalWrite(ledPin3, HIGH);
+ delay(1000);
+ 
+ digitalWrite(ledPin1, HIGH);
+ digitalWrite(ledPin2, HIGH);
+ digitalWrite(ledPin3, LOW);
+ delay(1000);
+
+ digitalWrite(ledPin1, LOW);
+ digitalWrite(ledPin2, HIGH);
+ digitalWrite(ledPin3, LOW);
+ delay(1000);
+
+ digitalWrite(ledPin1, HIGH);
+ digitalWrite(ledPin2, LOW);
+ digitalWrite(ledPin3, LOW);
+ delay(1000);
+
+ digitalWrite(ledPin1, LOW);
+ digitalWrite(ledPin2, LOW);
+ digitalWrite(ledPin3, HIGH);
+ delay(1000);
+
+ digitalWrite(ledPin1, LOW);
+ digitalWrite(ledPin2, LOW);
+ digitalWrite(ledPin3, LOW);
+ delay(1000);
+
+ digitalWrite(ledPin1, HIGH);
+ digitalWrite(ledPin2, HIGH);
+ digitalWrite(ledPin3, HIGH);
+ delay(5000);
+}
+
+
+// Courtesy http://www.instructables.com/id/How-to-Use-an-RGB-LED/?ALLSTEPS
+// function to convert a color to its Red, Green, and Blue components.
+
+void hueToRGB(uint8_t hue, uint8_t brightness)
+{
+    uint16_t scaledHue = (hue * 6);
+    uint8_t segment = scaledHue / 256; // segment 0 to 5 around the
+                                            // color wheel
+    uint16_t segmentOffset =
+      scaledHue - (segment * 256); // position within the segment
+
+    uint8_t complement = 0;
+    uint16_t prev = (brightness * ( 255 -  segmentOffset)) / 256;
+    uint16_t next = (brightness *  segmentOffset) / 256;
+
+    if(invert)
+    {
+      brightness = 255 - brightness;
+      complement = 255;
+      prev = 255 - prev;
+      next = 255 - next;
+    }
+
+    switch(segment ) {
+    case 0:      // red
+        R = brightness;
+        G = next;
+        B = complement;
+    break;
+    case 1:     // yellow
+        R = prev;
+        G = brightness;
+        B = complement;
+    break;
+    case 2:     // green
+        R = complement;
+        G = brightness;
+        B = next;
+    break;
+    case 3:    // cyan
+        R = complement;
+        G = prev;
+        B = brightness;
+    break;
+    case 4:    // blue
+        R = next;
+        G = complement;
+        B = brightness;
+    break;
+   case 5:      // magenta
+    default:
+        R = brightness;
+        G = complement;
+        B = prev;
+    break;
+    }
+}
