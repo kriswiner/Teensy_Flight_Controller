@@ -1,0 +1,21 @@
+#include "mbed.h"
+
+PwmOut pwm1(P0_28);
+PwmOut pwm2(P0_29);
+PwmOut pwm3(P0_12);
+//PwmOut pwm4(P0_13);
+
+int main() {
+    while(1) {
+ 
+for (float p = 0.0f; p < 1.0f; p += 0.01f) {
+     pwm1.write(p); // write out duty cycle, 0 = stop, 255 = full
+     pwm2.write(p); // write out duty cycle, 0 = stop, 255 = full
+     pwm3.write(p); // write out duty cycle, 0 = stop, 255 = full
+//    pwm4.write(p); // write out duty cycle, 0 = stop, 255 = full
+     wait(0.1);
+ 
+      }
+
+}
+}
