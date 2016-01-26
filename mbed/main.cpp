@@ -32,7 +32,7 @@
 #include "MPU9250.h"
 #include "BMP280.h"
 #include "EM7180.h"
-#include "N5110.h"
+//#include "N5110.h"
 #include "math.h"
 
 #define EM7180_PassThruStatus     0x9E   
